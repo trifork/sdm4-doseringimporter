@@ -57,8 +57,8 @@
 		<dependency>
 			<groupId>dk.nsi.stamdata4</groupId>
 			<artifactId>sdm-core</artifactId>
-			<version>4.0</version>
-		</dependency>
+            <version>4.1-SNAPSHOT</version>
+        </dependency>
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -92,7 +92,7 @@
         <dependency>
             <groupId>dk.nsi.stamdata4</groupId>
             <artifactId>testutils</artifactId>
-            <version>4.0</version>
+            <version>4.1-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
