@@ -1,4 +1,4 @@
-CREATE TABLE DosageStructure (
+ CREATE TABLE IF NOT EXISTS DosageStructure (
     DosageStructurePID BIGINT(15) AUTO_INCREMENT NOT NULL PRIMARY KEY,
     
     releaseNumber BIGINT(15) NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE DosageStructure (
     INDEX (code, ValidTo, ValidFrom)
 ) ENGINE=InnoDB COLLATE=utf8_bin;
 
-CREATE TABLE DosageUnit (
+ CREATE TABLE IF NOT EXISTS DosageUnit (
     DosageUnitPID BIGINT(15) AUTO_INCREMENT NOT NULL PRIMARY KEY,
     
     code INT(4) NOT NULL, -- ID
@@ -37,7 +37,7 @@ CREATE TABLE DosageUnit (
     INDEX (code, ValidTo, ValidFrom)
 ) ENGINE=InnoDB COLLATE=utf8_bin;
 
-CREATE TABLE DosageVersion (
+ CREATE TABLE IF NOT EXISTS DosageVersion (
     DosageVersionPID BIGINT(15) AUTO_INCREMENT NOT NULL PRIMARY KEY,
     
     daDate DATE NOT NULL, -- @ID // TODO: Should the id not be the releaseNumber? :S
@@ -55,7 +55,7 @@ CREATE TABLE DosageVersion (
     INDEX (releaseDate, ValidTo, ValidFrom)
 ) ENGINE=InnoDB COLLATE=utf8_bin;
 
-CREATE TABLE DrugDosageStructureRelation (
+ CREATE TABLE IF NOT EXISTS DrugDosageStructureRelation (
     DrugDosageStructureRelationPID BIGINT(15) AUTO_INCREMENT NOT NULL PRIMARY KEY,
     
     id VARCHAR(200) NOT NULL,
@@ -73,7 +73,7 @@ CREATE TABLE DrugDosageStructureRelation (
     INDEX (id, ValidTo, ValidFrom)
 ) ENGINE=InnoDB COLLATE=utf8_bin;
 
-CREATE TABLE DosageDrug (
+ CREATE TABLE IF NOT EXISTS DosageDrug (
     DosageDrugPID BIGINT(15) AUTO_INCREMENT NOT NULL PRIMARY KEY,
     
     releaseNumber BIGINT(15) NOT NULL,
