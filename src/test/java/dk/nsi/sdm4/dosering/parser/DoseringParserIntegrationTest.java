@@ -44,12 +44,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static org.apache.commons.io.FileUtils.toFile;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 
@@ -116,6 +118,20 @@ public class DoseringParserIntegrationTest {
         runImporter();
         
         assertThat(jdbcTemplate.queryForInt("select count(*) from DosageStructure"), equalTo(587));
+    }
+
+    @Test
+    public void testImportUpdatesModifiedDate() throws Exception {
+        runImporter();
+        Timestamp modified1 = jdbcTemplate.queryForObject("SELECT ModifiedDate FROM DosageDrug LIMIT 1", Timestamp.class);
+        Thread.sleep(1000);
+        jdbcTemplate.update("UPDATE DosageVersion SET releaseNumber=124");
+        drugsFile = getFile("multiple/Drugs.json");
+        runImporter();
+
+        Timestamp modified2 = jdbcTemplate.queryForObject(
+                "SELECT ModifiedDate FROM DosageDrug ORDER BY ModifiedDate DESC LIMIT 1", Timestamp.class);
+        assertFalse(modified1.equals(modified2));
     }
 
     @Test

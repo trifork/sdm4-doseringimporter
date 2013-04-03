@@ -82,6 +82,10 @@ public class DoseringParser implements Parser {
 
         SLALogItem slaLogItem = slaLogger.createLogItem("DosageSuggestionImporter", "All Files");
         try {
+            // Reset transaction time before import
+            persister.resetTransactionTime();
+
+
             // First check to see if all expected files are present
             validateInputStructure(dataSet);
             
