@@ -78,9 +78,13 @@ public class DoseringParser implements Parser {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void process(File dataSet) throws ParserException {
+    public void process(File dataSet, String identifier) throws ParserException {
 
-        SLALogItem slaLogItem = slaLogger.createLogItem("DosageSuggestionImporter", "All Files");
+        SLALogItem slaLogItem = slaLogger.createLogItem(getHome()+".process", "SDM4."+getHome()+".process");
+        slaLogItem.setMessageId(identifier);
+        if (dataSet != null) {
+            slaLogItem.addCallParameter(Parser.SLA_INPUT_NAME, dataSet.getAbsolutePath());
+        }
         try {
             // Reset transaction time before import
             persister.resetTransactionTime();
@@ -149,8 +153,10 @@ public class DoseringParser implements Parser {
 
             // PERSIST THE DATA
             persister.persistCompleteDataset(versionDataset, drugs, structures, units, relations);
+            long processed = versionDataset.size() + drugs.size() + structures.size() + relations.size();
 
             logger.info("Dosage Suggestion Registry v" + version.getReleaseNumber() + " was successfully imported.");
+            slaLogItem.addCallParameter(Parser.SLA_RECORDS_PROCESSED_MAME, ""+processed);
             slaLogItem.setCallResultOk();
             slaLogItem.store();
         } catch (Exception e) {

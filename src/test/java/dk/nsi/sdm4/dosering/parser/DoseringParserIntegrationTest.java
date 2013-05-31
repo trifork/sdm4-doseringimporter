@@ -206,6 +206,6 @@ public class DoseringParserIntegrationTest {
         FileUtils.copyFileToDirectory(unitsFile, datasetDir);
         FileUtils.copyFileToDirectory(relationFile, datasetDir);
 
-        parser.process(datasetDir);
+        parser.process(datasetDir, "");
     }
 }
